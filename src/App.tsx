@@ -17,14 +17,18 @@ export default function App() {
         <img src="/cover.jpg" alt="" draggable={false} className="h-full w-full object-cover" />
       </div>
 
-      <div className="relative z-10 flex min-h-svh flex-col gap-3 px-[4vw] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:gap-5">
+      <div className="relative z-10 flex min-h-svh flex-col justify-start gap-3 px-[4vw] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:gap-5 md:justify-center">
         {/* top row — brand */}
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-2 font-label text-[10px] uppercase tracking-[0.35em] text-white/70">
-            <span className="grid h-6 w-6 place-items-center rounded-sm border border-white/20">
-              <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
+          <p className="flex items-center gap-3 font-label text-sm uppercase tracking-[0.3em] text-white/80 sm:text-base">
+            <span className="grid h-8 w-8 place-items-center rounded-sm border border-white/25">
+              <span className="h-2 w-2 rounded-full bg-white/80" />
             </span>
-            90's Assam
+            <span>
+              90's Assam
+              <span className="mx-2 text-white/40">—</span>
+              <span className="text-white/55">Jakhalabandha</span>
+            </span>
           </p>
           <p className="hidden items-center gap-3 font-label text-[10px] uppercase tracking-[0.3em] text-white/40 md:flex">
             <span>Index 01</span>
@@ -33,8 +37,8 @@ export default function App() {
           </p>
         </div>
 
-        {/* central image — whole image always visible, centered, as large as possible */}
-        <figure className="relative mx-auto my-auto w-fit">
+        {/* central image — whole image always visible, centered */}
+        <figure className="relative mx-auto w-fit">
           <img
             src="/cover.jpg"
             srcSet="/cover-mobile.jpg 1600w, /cover.jpg 2528w"
