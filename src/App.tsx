@@ -33,8 +33,8 @@ export default function App() {
           </p>
         </div>
 
-        {/* central image — fills ~80% of the space on mobile, editorial canvas on desktop */}
-        <figure className="relative min-h-0 flex-1 md:mx-auto md:my-auto md:flex-none">
+        {/* central image — whole image always visible, centered, as large as possible */}
+        <figure className="relative mx-auto my-auto w-fit">
           <img
             src="/cover.jpg"
             srcSet="/cover-mobile.jpg 1600w, /cover.jpg 2528w"
@@ -42,7 +42,7 @@ export default function App() {
             alt="A cinematic scene — press the record below to play"
             fetchPriority="high"
             draggable={false}
-            className="absolute inset-0 h-full w-full select-none rounded-xl object-cover shadow-[0_45px_90px_-25px_rgba(0,0,0,0.8),0_18px_40px_-18px_rgba(0,0,0,0.6)] md:static md:block md:h-auto md:max-h-[74svh] md:w-auto md:max-w-[96vw] md:object-contain"
+            className="block h-auto max-h-[74svh] w-auto max-w-[96vw] select-none rounded-xl object-contain shadow-[0_45px_90px_-25px_rgba(0,0,0,0.8),0_18px_40px_-18px_rgba(0,0,0,0.6)]"
           />
           {/* hairline frame */}
           <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10" />
