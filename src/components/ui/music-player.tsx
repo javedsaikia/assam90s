@@ -145,7 +145,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
       <audio ref={audioRef} src={audioSrc} loop={isRepeat} preload="metadata" />
 
       {/* Disc */}
-      <div className="relative h-11 w-11 shrink-0 sm:h-12 sm:w-12">
+      <div className="relative h-12 w-12 shrink-0 sm:h-12 sm:w-12">
         <div className={`disc-spin h-full w-full rounded-full ${isPlaying ? 'spinning' : ''}`}>
           <img
             src={albumArt}

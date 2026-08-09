@@ -17,7 +17,7 @@ export default function App() {
         <img src="/cover.jpg" alt="" draggable={false} className="h-full w-full object-cover" />
       </div>
 
-      <div className="relative z-10 flex min-h-svh flex-col justify-start gap-3 px-[4vw] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:gap-5 md:justify-center">
+      <div className="relative z-10 flex min-h-svh flex-col justify-center gap-3 px-[4vw] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:gap-5">
         {/* top row — brand */}
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-3 font-label text-sm uppercase tracking-[0.3em] text-white/80 sm:text-base">
