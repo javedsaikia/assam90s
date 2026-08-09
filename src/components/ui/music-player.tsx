@@ -84,7 +84,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
   const toggleRepeat = () => setIsRepeat(!isRepeat);
 
   return (
-    <div className="relative flex w-[min(480px,88vw)] items-center gap-3 rounded-xl border border-[#2F323B] bg-[#0B0B0E]/95 p-3 text-white shadow-[0_35px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-md sm:gap-4 sm:p-3.5">
+    <div className="relative flex w-[min(560px,94vw)] items-center gap-3.5 rounded-xl border border-[#2F323B] bg-[#0B0B0E]/95 p-3.5 text-white shadow-[0_35px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-md sm:gap-4 sm:p-4">
        <style>{`
         .player-progress {
             --progress: 0%;
@@ -145,7 +145,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
       <audio ref={audioRef} src={audioSrc} loop={isRepeat} preload="metadata" />
 
       {/* Disc */}
-      <div className="relative h-12 w-12 shrink-0 sm:h-12 sm:w-12">
+      <div className="relative h-14 w-14 shrink-0 sm:h-16 sm:w-16">
         <div className={`disc-spin h-full w-full rounded-full ${isPlaying ? 'spinning' : ''}`}>
           <img
             src={albumArt}
@@ -160,13 +160,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
       {/* Track info + progress */}
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline justify-between gap-3">
-          <h2 className="font-editorial truncate text-[15px] leading-tight text-white sm:text-base">{songTitle}</h2>
-          <p className="font-label hidden shrink-0 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:block">
+          <h2 className="font-editorial truncate text-[16px] leading-tight text-white sm:text-lg">{songTitle}</h2>
+          <p className="font-label hidden shrink-0 text-[9px] uppercase tracking-[0.18em] text-white/45 sm:block">
             {artistName}
           </p>
         </div>
 
-        <p className="font-label mt-0.5 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:hidden">
+        <p className="font-label mt-0.5 text-[9px] uppercase tracking-[0.18em] text-white/45 sm:hidden">
           {artistName}
         </p>
 
@@ -180,7 +180,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
           className="player-progress -mb-1.5 -mt-0.5 block w-full"
           aria-label="Seek through track"
         />
-        <div className="flex justify-between font-label text-[8px] uppercase tracking-[0.12em] text-white/35">
+        <div className="flex justify-between font-label text-[9px] uppercase tracking-[0.12em] text-white/35">
           <span className="tabular-nums">{formatTime(currentTime)}</span>
           <span className="tabular-nums">{formatTime(duration)}</span>
         </div>
@@ -195,20 +195,20 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
           aria-label="Shuffle"
           className={`hidden rounded-full p-1.5 transition-colors duration-300 sm:block ${isShuffle ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
         >
-          <Shuffle size={13} strokeWidth={1.5} />
+          <Shuffle size={14} strokeWidth={1.5} />
         </motion.button>
         <motion.button
           whileTap={{ scale: 0.8 }}
           aria-label="Previous track"
           className="rounded-full p-1.5 text-white/60 transition-colors hover:text-white"
         >
-          <SkipBack size={15} strokeWidth={1.5} />
+          <SkipBack size={16} strokeWidth={1.5} />
         </motion.button>
 
         <motion.button
           onClick={togglePlayPause}
           aria-label={isPlaying ? 'Pause music' : 'Play music'}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white transition-colors hover:bg-white/10"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white transition-colors hover:bg-white/10"
           whileTap={{ scale: 0.92 }}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -220,7 +220,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
               transition={{ duration: 0.15 }}
               className="flex items-center justify-center"
             >
-              {isPlaying ? <Pause size={16} strokeWidth={1.75} /> : <Play size={16} strokeWidth={1.75} className="ml-0.5" />}
+              {isPlaying ? <Pause size={18} strokeWidth={1.75} /> : <Play size={18} strokeWidth={1.75} className="ml-0.5" />}
             </motion.span>
           </AnimatePresence>
         </motion.button>
@@ -230,7 +230,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
           aria-label="Next track"
           className="rounded-full p-1.5 text-white/60 transition-colors hover:text-white"
         >
-          <SkipForward size={15} strokeWidth={1.5} />
+          <SkipForward size={16} strokeWidth={1.5} />
         </motion.button>
         <motion.button
           whileTap={{ scale: 0.8 }}
@@ -239,7 +239,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
           aria-label="Repeat"
           className={`hidden rounded-full p-1.5 transition-colors duration-300 sm:block ${isRepeat ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
         >
-          <Repeat size={13} strokeWidth={1.5} />
+          <Repeat size={14} strokeWidth={1.5} />
         </motion.button>
       </div>
     </div>
