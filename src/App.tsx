@@ -15,7 +15,7 @@ export default function App() {
           autoPlay
           muted
           playsInline
-          loop={false}
+          loop
           preload="auto"
           disablePictureInPicture
           src={videoSrc}
