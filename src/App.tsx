@@ -12,31 +12,8 @@ export default function App() {
         <div className="grain absolute inset-0 opacity-[0.05]" />
       </div>
 
-      {/* ---------------- Discreet site chrome ---------------- */}
-      <header className="pointer-events-none absolute left-[max(1.5rem,env(safe-area-inset-left))] top-[max(1.5rem,env(safe-area-inset-top))] z-30 flex items-center gap-3 sm:left-10 sm:top-8">
-        <span className="grid h-7 w-7 place-items-center rounded-sm border border-white/20">
-          <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
-        </span>
-        <span className="font-label text-[10px] uppercase tracking-[0.35em] text-white/70">90's Assam</span>
-      </header>
-
-      <div className="pointer-events-none absolute right-[max(1.5rem,env(safe-area-inset-right))] top-[max(1.5rem,env(safe-area-inset-top))] z-30 hidden font-label text-[10px] uppercase tracking-[0.3em] text-white/40 md:flex md:items-center md:gap-3 md:right-10 md:top-8">
-        <span>Index 01</span>
-        <span className="h-3 w-px bg-white/20" />
-        <span className="text-white/60">Analog Session</span>
-      </div>
-
-      <footer className="pointer-events-none absolute bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-[max(1.5rem,env(safe-area-inset-left))] z-30 flex flex-col gap-1 font-label text-[9px] uppercase tracking-[0.28em] text-white/35 sm:bottom-8 sm:left-10">
-        <span>26.2006° N — 92.9376° E</span>
-        <span className="text-white/60">Built by Javed Saikia</span>
-      </footer>
-
-      <div className="pointer-events-none absolute bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-[max(1.5rem,env(safe-area-inset-right))] z-30 hidden font-label text-[9px] uppercase tracking-[0.28em] text-white/35 sm:bottom-8 sm:right-10 md:block">
-        © 2026 · Sound on
-      </div>
-
       {/* ---------------- Hero: the artwork, kept as-is ---------------- */}
-      <section className="relative z-10 flex min-h-svh items-center px-[5vw] py-[6vh]">
+      <section className="relative z-10 flex min-h-svh items-center px-[3vw] py-[3vh]">
         {/* blurred colour extension bleeding into the page (desktop only — saves mobile GPU) */}
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 hidden opacity-20 mix-blend-screen blur-3xl md:block">
           <img src="/cover.jpg" alt="" draggable={false} className="h-full w-full object-cover" />
@@ -45,16 +22,31 @@ export default function App() {
         {/* ambient glow behind the frame */}
         <div aria-hidden className="pointer-events-none absolute z-0 rounded-[24px] bg-[radial-gradient(circle_at_50%_50%,rgba(150,170,215,0.1),transparent_70%)] blur-md" />
 
-        <div className="relative z-10 mx-auto my-auto flex w-fit flex-col items-center gap-7">
+        <div className="relative z-10 mx-auto my-auto flex w-[min(96vw,1800px)] flex-col items-stretch gap-4">
+          {/* top row — above the image, never overlapping it */}
+          <div className="flex items-center justify-between">
+            <p className="flex items-center gap-2 font-label text-[10px] uppercase tracking-[0.35em] text-white/70">
+              <span className="grid h-6 w-6 place-items-center rounded-sm border border-white/20">
+                <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
+              </span>
+              90's Assam
+            </p>
+            <p className="hidden items-center gap-3 font-label text-[10px] uppercase tracking-[0.3em] text-white/40 md:flex">
+              <span>Index 01</span>
+              <span className="h-3 w-px bg-white/20" />
+              <span className="text-white/60">Analog Session</span>
+            </p>
+          </div>
+
           <figure className="relative">
             <img
               src="/cover.jpg"
               srcSet="/cover-mobile.jpg 1600w, /cover.jpg 2528w"
-              sizes="(min-width: 1024px) 70vw, 92vw"
+              sizes="(min-width: 1024px) 90vw, 96vw"
               alt="A cinematic scene — press the record below to play"
               fetchPriority="high"
               draggable={false}
-              className="block h-auto max-h-[64svh] w-auto max-w-[88vw] select-none rounded-xl object-contain shadow-[0_45px_90px_-25px_rgba(0,0,0,0.8),0_18px_40px_-18px_rgba(0,0,0,0.6)]"
+              className="block h-auto max-h-[74svh] w-full max-w-[96vw] select-none rounded-xl object-contain shadow-[0_45px_90px_-25px_rgba(0,0,0,0.8),0_18px_40px_-18px_rgba(0,0,0,0.6)]"
             />
             {/* hairline frame */}
             <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10" />
@@ -66,13 +58,20 @@ export default function App() {
           </figure>
 
           {/* The record, resting below the artwork */}
-          <div className="drop-shadow-[0_28px_45px_rgba(0,0,0,0.6)]">
+          <div className="mx-auto drop-shadow-[0_28px_45px_rgba(0,0,0,0.6)]">
             <MusicPlayer
               albumArt="/vinyl.jpg?v=2"
               songTitle="Mai Jaan Tuke dekha Pay"
               artistName="Ridip Dutta"
               audioSrc="/audio/track.mp3"
             />
+          </div>
+
+          {/* bottom row — below the image and player, never overlapping */}
+          <div className="flex items-center justify-between font-label text-[9px] uppercase tracking-[0.28em]">
+            <span className="text-white/35">26.2006° N — 92.9376° E</span>
+            <span className="hidden text-white/30 sm:inline">33⅓ RPM</span>
+            <span className="text-white/60">Built by Javed Saikia — © 2026</span>
           </div>
         </div>
       </section>

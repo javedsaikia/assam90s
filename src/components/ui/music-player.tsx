@@ -18,7 +18,7 @@ interface MusicPlayerProps {
   audioSrc: string;
 }
 
-// The main MusicPlayer component
+// The main MusicPlayer component — a compact, horizontal bar
 export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, artistName, audioSrc }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -84,7 +84,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
   const toggleRepeat = () => setIsRepeat(!isRepeat);
 
   return (
-    <div className="relative w-[min(320px,88vw)] rounded-xl border border-[#2F323B] bg-[#0B0B0E]/95 p-5 text-white shadow-[0_35px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-md sm:w-[min(360px,88vw)]">
+    <div className="relative flex w-[min(480px,88vw)] items-center gap-3 rounded-xl border border-[#2F323B] bg-[#0B0B0E]/95 p-3 text-white shadow-[0_35px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-md sm:gap-4 sm:p-3.5">
        <style>{`
         .player-progress {
             --progress: 0%;
@@ -139,76 +139,72 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
        `}</style>
 
       {/* corner markers */}
-      <Plus size={10} strokeWidth={1.5} className="pointer-events-none absolute left-2.5 top-2.5 text-white/25" />
-      <Plus size={10} strokeWidth={1.5} className="pointer-events-none absolute bottom-2.5 right-2.5 text-white/25" />
+      <Plus size={9} strokeWidth={1.5} className="pointer-events-none absolute left-1.5 top-1.5 text-white/25" />
+      <Plus size={9} strokeWidth={1.5} className="pointer-events-none absolute bottom-1.5 right-1.5 text-white/25" />
 
       <audio ref={audioRef} src={audioSrc} loop={isRepeat} preload="metadata" />
 
-      {/* Head: disc + track details */}
-      <div className="flex items-center gap-4">
-        <div className="relative h-14 w-14 shrink-0 sm:h-16 sm:w-16">
-          <div className={`disc-spin h-full w-full rounded-full ${isPlaying ? 'spinning' : ''}`}>
-            <img
-              src={albumArt}
-              alt={`${songTitle} album art`}
-              className="h-full w-full rounded-full object-cover ring-1 ring-white/15"
-              onError={(e) => { e.currentTarget.src = 'https://placehold.co/224x224/1a1a1a/ffffff?text=Music'; }}
-            />
-          </div>
-          <span className="pointer-events-none absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ring-1 ring-white/30" />
+      {/* Disc */}
+      <div className="relative h-11 w-11 shrink-0 sm:h-12 sm:w-12">
+        <div className={`disc-spin h-full w-full rounded-full ${isPlaying ? 'spinning' : ''}`}>
+          <img
+            src={albumArt}
+            alt={`${songTitle} album art`}
+            className="h-full w-full rounded-full object-cover ring-1 ring-white/15"
+            onError={(e) => { e.currentTarget.src = 'https://placehold.co/224x224/1a1a1a/ffffff?text=Music'; }}
+          />
         </div>
-
-        <div className="min-w-0 flex-1">
-          <p className="font-label text-[9px] uppercase tracking-[0.32em] text-white/40">Now playing</p>
-          <h2 className="font-editorial truncate text-xl leading-tight text-white sm:text-[22px]">{songTitle}</h2>
-          <p className="font-label text-[10px] uppercase tracking-[0.2em] text-white/50">{artistName}</p>
-        </div>
+        <span className="pointer-events-none absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ring-1 ring-white/30" />
       </div>
 
-      {/* hairline divider */}
-      <div className="my-4 h-px bg-[#2F323B]" />
+      {/* Track info + progress */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-3">
+          <h2 className="font-editorial truncate text-[15px] leading-tight text-white sm:text-base">{songTitle}</h2>
+          <p className="font-label hidden shrink-0 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:block">
+            {artistName}
+          </p>
+        </div>
 
-      {/* Progress */}
-      <input
-        ref={progressBarRef}
-        type="range"
-        min="0"
-        max={duration || 100}
-        value={currentTime}
-        onChange={handleSeek}
-        className="player-progress block w-full"
-        aria-label="Seek through track"
-      />
-      <div className="mt-2 flex items-center justify-between font-label text-[9px] uppercase tracking-[0.14em] text-white/40">
-        <span className="tabular-nums">{formatTime(currentTime)}</span>
-        <span className="text-white/30">33⅓ rpm</span>
-        <span className="tabular-nums">{formatTime(duration)}</span>
+        <input
+          ref={progressBarRef}
+          type="range"
+          min="0"
+          max={duration || 100}
+          value={currentTime}
+          onChange={handleSeek}
+          className="player-progress -mb-1.5 -mt-0.5 block w-full"
+          aria-label="Seek through track"
+        />
+        <div className="flex justify-between font-label text-[8px] uppercase tracking-[0.12em] text-white/35">
+          <span className="tabular-nums">{formatTime(currentTime)}</span>
+          <span className="tabular-nums">{formatTime(duration)}</span>
+        </div>
       </div>
 
       {/* Controls */}
-      <div className="mt-4 flex items-center justify-between">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-2">
         <motion.button
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.85 }}
+          whileTap={{ scale: 0.8 }}
           onClick={toggleShuffle}
           aria-pressed={isShuffle}
-          className={`transition-colors duration-300 ${isShuffle ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
+          aria-label="Shuffle"
+          className={`hidden rounded-full p-1.5 transition-colors duration-300 sm:block ${isShuffle ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
         >
-          <Shuffle size={15} strokeWidth={1.5} />
+          <Shuffle size={13} strokeWidth={1.5} />
         </motion.button>
         <motion.button
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.85 }}
-          className="text-white/60 transition-colors hover:text-white"
+          whileTap={{ scale: 0.8 }}
+          aria-label="Previous track"
+          className="rounded-full p-1.5 text-white/60 transition-colors hover:text-white"
         >
-          <SkipBack size={17} strokeWidth={1.5} />
+          <SkipBack size={15} strokeWidth={1.5} />
         </motion.button>
 
         <motion.button
           onClick={togglePlayPause}
           aria-label={isPlaying ? 'Pause music' : 'Play music'}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white transition-colors hover:bg-white/10"
-          whileHover={{ scale: 1.06 }}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white transition-colors hover:bg-white/10"
           whileTap={{ scale: 0.92 }}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -220,26 +216,26 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
               transition={{ duration: 0.15 }}
               className="flex items-center justify-center"
             >
-              {isPlaying ? <Pause size={18} strokeWidth={1.75} /> : <Play size={18} strokeWidth={1.75} className="ml-0.5" />}
+              {isPlaying ? <Pause size={16} strokeWidth={1.75} /> : <Play size={16} strokeWidth={1.75} className="ml-0.5" />}
             </motion.span>
           </AnimatePresence>
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.85 }}
-          className="text-white/60 transition-colors hover:text-white"
+          whileTap={{ scale: 0.8 }}
+          aria-label="Next track"
+          className="rounded-full p-1.5 text-white/60 transition-colors hover:text-white"
         >
-          <SkipForward size={17} strokeWidth={1.5} />
+          <SkipForward size={15} strokeWidth={1.5} />
         </motion.button>
         <motion.button
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.85 }}
+          whileTap={{ scale: 0.8 }}
           onClick={toggleRepeat}
           aria-pressed={isRepeat}
-          className={`transition-colors duration-300 ${isRepeat ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
+          aria-label="Repeat"
+          className={`hidden rounded-full p-1.5 transition-colors duration-300 sm:block ${isRepeat ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
         >
-          <Repeat size={15} strokeWidth={1.5} />
+          <Repeat size={13} strokeWidth={1.5} />
         </motion.button>
       </div>
     </div>
