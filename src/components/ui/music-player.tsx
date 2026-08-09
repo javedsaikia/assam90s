@@ -166,6 +166,10 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
           </p>
         </div>
 
+        <p className="font-label mt-0.5 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:hidden">
+          {artistName}
+        </p>
+
         <input
           ref={progressBarRef}
           type="range"
