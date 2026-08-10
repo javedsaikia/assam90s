@@ -79,8 +79,8 @@ export default function App() {
               },
               {
                 albumArt: '/vinyl-moinajan.jpg',
-                songTitle: 'Moinajan — মইনজন',
-                artistName: '',
+                songTitle: 'Moinajan',
+                artistName: 'Jitul Sonowal',
                 audioSrc: '/audio/track2.mp3',
               },
             ]}
