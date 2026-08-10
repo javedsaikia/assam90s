@@ -91,7 +91,18 @@ export default function App() {
         <div className="flex items-center justify-between font-label text-[9px] uppercase tracking-[0.28em]">
           <span className="text-white/35">26.2006° N — 92.9376° E</span>
           <span className="hidden text-white/30 sm:inline">33⅓ RPM</span>
-          <span className="text-white/60">Built by Javed Saikia — © 2026</span>
+          <span className="text-white/60">
+            Built by{' '}
+            <a
+              href="https://www.javedsaikia.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/85 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/70"
+            >
+              Javed Saikia
+            </a>{' '}
+            — © 2026
+          </span>
         </div>
       </div>
     </main>
