@@ -47,15 +47,16 @@ export default function App() {
           </p>
         </div>
 
-        {/* central image — foreground layer above the background video */}
+        {/* central artwork — video in the foreground frame, above the background video */}
         <figure className="relative mx-auto w-fit">
-          <img
-            src="/cover.jpg"
-            srcSet="/cover-mobile.jpg 1600w, /cover.jpg 2528w"
-            sizes="(min-width: 1024px) 90vw, 96vw"
-            alt="A cinematic scene — press the record below to play"
-            fetchPriority="high"
-            draggable={false}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            src="/cover-art.mp4"
             className="block h-auto max-h-[74svh] w-auto max-w-[96vw] select-none rounded-xl object-contain shadow-[0_45px_90px_-25px_rgba(0,0,0,0.85),0_18px_40px_-18px_rgba(0,0,0,0.6)]"
           />
           {/* hairline frame */}
