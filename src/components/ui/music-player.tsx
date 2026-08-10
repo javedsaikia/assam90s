@@ -10,29 +10,43 @@ const formatTime = (timeInSeconds: number): string => {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 };
 
-// Interface for the component props
-interface MusicPlayerProps {
+// A single record in the playlist
+export interface MusicTrack {
   albumArt: string;
   songTitle: string;
   artistName: string;
   audioSrc: string;
 }
 
+// Interface for the component props
+interface MusicPlayerProps {
+  tracks: MusicTrack[];
+}
+
 // The main MusicPlayer component — a compact, horizontal bar
-export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, artistName, audioSrc }) => {
+export const MusicPlayer: React.FC<MusicPlayerProps> = ({ tracks }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
+  const autoPlayRef = useRef(false);
 
-  // Effect to handle audio updates
+  const currentTrack = tracks[Math.min(currentIndex, tracks.length - 1)];
+  const { albumArt, songTitle, artistName, audioSrc } = currentTrack;
+
+  // Effect to handle audio updates — re-binds whenever the track changes
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    setCurrentTime(0);
+    setDuration(0);
+    if (progressBarRef.current) progressBarRef.current.style.setProperty('--progress', '0%');
 
     const setAudioData = () => {
       setDuration(audio.duration);
@@ -52,6 +66,12 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
     audio.addEventListener('loadeddata', setAudioData);
     audio.addEventListener('timeupdate', setAudioTime);
     audio.addEventListener('ended', onEnded);
+
+    // After a next/previous click, keep playing the freshly-loaded track
+    if (autoPlayRef.current) {
+      audio.play().catch((error) => console.error('Error playing audio:', error));
+      autoPlayRef.current = false;
+    }
     
     // Cleanup event listeners
     return () => {
@@ -82,6 +102,22 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
   };
   const toggleShuffle = () => setIsShuffle(!isShuffle);
   const toggleRepeat = () => setIsRepeat(!isRepeat);
+
+  // Jump to the next / previous record; auto-continues playing
+  const goToTrack = (direction: 1 | -1) => {
+    if (tracks.length <= 1) return;
+    let next: number;
+    if (isShuffle) {
+      do {
+        next = Math.floor(Math.random() * tracks.length);
+      } while (next === currentIndex && tracks.length > 1);
+    } else {
+      next = (currentIndex + direction + tracks.length) % tracks.length;
+    }
+    autoPlayRef.current = true;
+    setCurrentIndex(next);
+    setIsPlaying(true);
+  };
 
   return (
     <div className="relative flex w-[min(620px,96vw)] items-center gap-4 rounded-xl border border-[#2F323B] bg-[#0B0B0E]/95 p-4 text-white shadow-[0_35px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-md sm:gap-5 sm:p-5">
@@ -161,14 +197,18 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline justify-between gap-3">
           <h2 className="font-editorial truncate text-lg leading-tight text-white sm:text-xl">{songTitle}</h2>
-          <p className="font-label hidden shrink-0 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:block">
-            {artistName}
-          </p>
+          {artistName && (
+            <p className="font-label hidden shrink-0 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:block">
+              {artistName}
+            </p>
+          )}
         </div>
 
-        <p className="font-label mt-0.5 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:hidden">
-          {artistName}
-        </p>
+        {artistName && (
+          <p className="font-label mt-0.5 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:hidden">
+            {artistName}
+          </p>
+        )}
 
         <input
           ref={progressBarRef}
@@ -199,6 +239,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
         </motion.button>
         <motion.button
           whileTap={{ scale: 0.8 }}
+          onClick={() => goToTrack(-1)}
           aria-label="Previous track"
           className="rounded-full p-1.5 text-white/60 transition-colors hover:text-white"
         >
@@ -227,6 +268,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ albumArt, songTitle, a
 
         <motion.button
           whileTap={{ scale: 0.8 }}
+          onClick={() => goToTrack(1)}
           aria-label="Next track"
           className="rounded-full p-1.5 text-white/60 transition-colors hover:text-white"
         >

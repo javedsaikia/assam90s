@@ -70,10 +70,20 @@ export default function App() {
         {/* the record, below the artwork */}
         <div className="mx-auto drop-shadow-[0_28px_45px_rgba(0,0,0,0.6)]">
           <MusicPlayer
-            albumArt="/vinyl.jpg?v=2"
-            songTitle="Mai Jaan Tuke dekha Pay"
-            artistName="Ridip Dutta"
-            audioSrc="/audio/track.mp3"
+            tracks={[
+              {
+                albumArt: '/vinyl.jpg?v=2',
+                songTitle: 'Mai Jaan Tuke dekha Pay',
+                artistName: 'Ridip Dutta',
+                audioSrc: '/audio/track.mp3',
+              },
+              {
+                albumArt: '/vinyl-moinajan.jpg',
+                songTitle: 'Moinajan — মইনজন',
+                artistName: '',
+                audioSrc: '/audio/track2.mp3',
+              },
+            ]}
           />
         </div>
 

@@ -12,10 +12,14 @@ const MusicPlayerDemo = () => {
   return (
     <div className="min-h-screen w-full bg-gray-100 dark:bg-black flex items-center justify-center p-4">
         <MusicPlayer
-          albumArt={song.albumArt}
-          songTitle={song.songTitle}
-          artistName={song.artistName}
-          audioSrc={song.audioSrc}
+          tracks={[
+            {
+              albumArt: song.albumArt,
+              songTitle: song.songTitle,
+              artistName: song.artistName,
+              audioSrc: song.audioSrc,
+            },
+          ]}
         />
     </div>
   );
